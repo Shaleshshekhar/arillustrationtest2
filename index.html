@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bear AR Experience</title>
+  <title>Multi-Target WebAR Video Experience</title>
 
   <script src="https://cdn.8thwall.com/web/aframe/8frame-1.3.0.min.js"></script>
   <script src="https://cdn.8thwall.com/web/xrextras/xrextras.js"></script>
@@ -16,7 +16,7 @@
       font-family: 'Courier New', Courier, monospace;
     }
 
-    /* Simple Splash & Loading Screen */
+    /* Minimal Splash / Loading Screen */
     #splashScreen {
       position: fixed;
       inset: 0;
@@ -66,7 +66,7 @@
       background: rgba(176, 158, 117, 0.15);
     }
 
-    /* HUD Scan Status Prompts */
+    /* Global Heads-Up Scanning Display Prompt */
     #statusMessage {
       position: fixed;
       left: 50%;
@@ -91,9 +91,9 @@
 <body>
 
   <div id="splashScreen">
-    <div id="title">WILDLIFE ARCHIVE</div>
-    <div id="subtitle">BEAR OBSERVATION PROTOCOL</div>
-    <button id="startButton" disabled>LOADING...</button>
+    <div id="title">AR MULTI-TRACKER</div>
+    <div id="subtitle">INITIALIZING TARGET ARRAYS</div>
+    <button id="startButton" disabled>LOADING MEDIA BUFFERS...</button>
   </div>
 
   <div id="statusMessage"></div>
@@ -102,30 +102,59 @@
     xrextras-gesture-detector
     xrextras-loading
     xrextras-runtime-error
-    xrweb="disableWorldTracking: true">
+    xrweb="disableWorldTracking: true; maxTrackedImages: 4">
 
     <a-assets>
-      <video
-        id="bearVideo"
-        src="assets/arvideos/bear_video.mp4"
-        preload="auto"
-        playsinline
-        webkit-playsinline
-        crossorigin="anonymous">
-      </video>
+      <img id="bearThumb" src="image-targets/bear_target_luminance.jpg">
+      <img id="crowThumb" src="image-targets/crow_target_luminance.jpg">
+      <img id="donkeyThumb" src="image-targets/donkey_target_luminance.jpg">
+      <img id="footballThumb" src="image-targets/Football_luminance.jpg">
+      <img id="bookshopThumb" src="image-targets/Bookshop_luminance.jpg">
+      <img id="crowsThumb" src="image-targets/crows_luminance.jpg">
+      <img id="televisionThumb" src="image-targets/television_luminance.jpg">
+
+      <video id="bearVideo" src="./assets/arvideos/bear_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="crowVideo" src="./assets/arvideos/crow_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="donkeyVideo" src="./assets/arvideos/donkey_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="footballVideo" src="./assets/arvideos/football_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="bookshopVideo" src="./assets/arvideos/bookshop_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="signVideo" src="./assets/arvideos/sign_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="crowsVideo" src="./assets/arvideos/crows_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
+      <video id="televisionVideo" src="./assets/arvideos/television_video.mp4" preload="auto" playsinline webkit-playsinline crossorigin="anonymous"></video>
     </a-assets>
         
     <a-light type="ambient" color="#ffffff" intensity="2.0"></a-light>
 
     <xrextras-named-image-target name="bear_target">
-      <a-video
-        id="videoPlane"
-        src="#bearVideo"
-        width="0.75"
-        height="1.0"
-        position="0 0 0"
-        visible="false">
-      </a-video>
+      <xrextras-target-video-sound video="#bearVideo" thumb="#bearThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="crow_target">
+      <xrextras-target-video-sound video="#crowVideo" thumb="#crowThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="donkey_target">
+      <xrextras-target-video-sound video="#donkeyVideo" thumb="#donkeyThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="Football">
+      <xrextras-target-video-sound video="#footballVideo" thumb="#footballThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="Bookshop">
+      <xrextras-target-video-sound video="#bookshopVideo" thumb="#bookshopThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="sign">
+      <xrextras-target-video-sound video="#signVideo" thumb="#bookshopThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="crows">
+      <xrextras-target-video-sound video="#crowsVideo" thumb="#crowsThumb" width="0.5" height="1"></xrextras-target-video-sound>
+    </xrextras-named-image-target>
+
+    <xrextras-named-image-target name="television">
+      <xrextras-target-video-sound video="#televisionVideo" thumb="#televisionThumb" width="0.5" height="1"></xrextras-target-video-sound>
     </xrextras-named-image-target>
 
     <a-camera position="0 4 10"></a-camera>

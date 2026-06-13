@@ -1,91 +1,135 @@
 // ==========================================
-// 8TH WALL IMAGE TARGET CONFIGURATION
+// 8TH WALL 8-TARGET CONFIGURATION ARRAY
 // ==========================================
 const onxrloaded = () => {
   XR8.XrController.configure({
-    imageTargetData: [{
-      name: 'bear_target',
-      type: 'PLANAR',
-      imagePath: 'image-targets/bear_target_luminance.jpg',
-      properties: {
-        top: 320,
-        left: 0,
-        width: 960,
-        height: 1280,
-        isRotated: false,
-        originalWidth: 960,
-        originalHeight: 1920
+    imageTargetData: [
+      {
+        name: 'bear_target',
+        type: 'PLANAR',
+        imagePath: 'image-targets/bear_target_luminance.jpg',
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
+      },
+      {
+        name: 'crow_target',
+        type: 'PLANAR',
+        imagePath: 'image-targets/crow_target_luminance.jpg',
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
+      },
+      {
+        name: 'donkey_target',
+        type: 'PLANAR',
+        imagePath: 'image-targets/donkey_target_luminance.jpg',
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
+      },
+      {
+        name: 'Football',
+        type: 'PLANAR',
+        imagePath: 'image-targets/Football_luminance.jpg',
+        properties: { top: 214, left: 0, width: 640, height: 853, isRotated: false, originalWidth: 640, originalHeight: 1280 }
+      },
+      {
+        name: 'Bookshop',
+        type: 'PLANAR',
+        imagePath: 'image-targets/Bookshop_luminance.jpg',
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
+      },
+      {
+        name: 'sign',
+        type: 'PLANAR',
+        imagePath: 'image-targets/Bookshop_luminance.jpg', // Sign dynamic mapping fallback target
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
+      },
+      {
+        name: 'crows',
+        type: 'PLANAR',
+        imagePath: 'image-targets/crows_luminance.jpg',
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
+      },
+      {
+        name: 'television',
+        type: 'PLANAR',
+        imagePath: 'image-targets/television_luminance.jpg',
+        properties: { top: 320, left: 0, width: 960, height: 1280, isRotated: false, originalWidth: 960, originalHeight: 1920 }
       }
-    }]
+    ]
   })
 }
 
-// Check tracking engine initialization state
 window.XR8 ? onxrloaded() : window.addEventListener('xrloaded', onxrloaded)
 
 
 // ==========================================
-// APPLICATION LIFECYCLE MANAGEMENT
+// PIPELINE RUNTIME ENGINE
 // ==========================================
 window.APP = {
   started: false,
-  tracking: false
+  activeTargets: 0
 }
 
 window.addEventListener('load', () => {
   const startButton = document.querySelector('#startButton')
-  const bearVideo = document.querySelector('#bearVideo')
   const splashScreen = document.querySelector('#splashScreen')
   const statusMessage = document.querySelector('#statusMessage')
-  const videoPlane = document.querySelector('#videoPlane')
   const scene = document.querySelector('a-scene')
+  
+  // Track all video elements dynamically
+  const videoElements = Array.from(document.querySelectorAll('video'))
 
-  // 1. Asset Pipeline Preload Verification
-  bearVideo.load()
-  bearVideo.addEventListener('loadeddata', () => {
+  // 1. Monitor media element loading across all assets concurrently
+  Promise.all(
+    videoElements.map(video => {
+      return new Promise(resolve => {
+        if (video.readyState >= 2) {
+          resolve()
+        } else {
+          video.addEventListener('loadeddata', resolve, { once: true })
+        }
+      })
+    })
+  ).then(() => {
     startButton.disabled = false
     startButton.innerText = 'START EXPERIENCE'
-  }, { once: true })
+  })
 
-  // 2. Clear Splash Action & Muted Playback Warmup (Bypasses Browser Autoplay Restrictions)
+  // 2. Click Handling and Global Audio Unlock Routines
   startButton.addEventListener('click', async () => {
-    if (APP.started) return
     APP.started = true
-
-    try {
-      await bearVideo.play()
-      bearVideo.pause()
-      bearVideo.currentTime = 0
-    } catch (e) {
-      console.log('Video runtime engine initialization warmed up safely.')
+    
+    // Warm up and prime all audio pipelines to prevent browser autoplay blocks
+    for (const video of videoElements) {
+      try {
+        await video.play()
+        video.pause()
+        video.currentTime = 0
+      } catch (e) {
+        console.log('Audio pipeline cleared safely.')
+      }
     }
 
     splashScreen.style.display = 'none'
-    
-    if (!APP.tracking) {
-      statusMessage.innerText = 'SCAN THE BEAR TARGET'
-      statusMessage.style.display = 'block'
-    }
+    updateStatusHUD()
   })
 
-  // 3. Image Tracking Infrastructure Listeners
-  scene.addEventListener('xrimagefound', () => {
-    APP.tracking = true
-    statusMessage.style.display = 'none'
-    videoPlane.setAttribute('visible', 'true')
+  const updateStatusHUD = () => {
+    if (!APP.started) return
     
-    if (APP.started) {
-      bearVideo.play()
+    if (APP.activeTargets === 0) {
+      statusMessage.innerText = 'POINT CAMERA AT AN IMAGE TARGET'
+      statusMessage.style.display = 'block'
+    } else {
+      statusMessage.style.display = 'none'
     }
+  }
+
+  // 3. Multi-tracking Event Subscriptions
+  scene.addEventListener('xrimagefound', () => {
+    APP.activeTargets++
+    updateStatusHUD()
   })
 
   scene.addEventListener('xrimagelost', () => {
-    APP.tracking = false
-    bearVideo.pause()
-    
-    if (APP.started) {
-      statusMessage.innerText = 'RE-SCAN THE BEAR TARGET'
-      statusMessage.style.display = 'block'
-    }
+    APP.activeTargets = Math.max(0, APP.activeTargets - 1)
+    updateStatusHUD()
   })
 })
