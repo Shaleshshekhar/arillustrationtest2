@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/crow_target_luminance.jpg",
+  "metadata": null,
+  "name": "crow_target",
+  "type": "PLANAR",
+  "properties": {
+    "top": 320,
+    "left": 0,
+    "width": 960,
+    "height": 1280,
+    "isRotated": false,
+    "originalWidth": 960,
+    "originalHeight": 1920
+  },
+  "resources": {
+    "originalImage": "crow_target_original.jpg",
+    "croppedImage": "crow_target_cropped.jpg",
+    "thumbnailImage": "crow_target_thumbnail.jpg",
+    "luminanceImage": "crow_target_luminance.jpg"
+  },
+  "created": 1774363151430,
+  "updated": 1774363151430
+}

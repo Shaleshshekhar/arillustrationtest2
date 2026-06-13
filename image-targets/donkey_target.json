@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/donkey_target_luminance.jpg",
+  "metadata": null,
+  "name": "donkey_target",
+  "type": "PLANAR",
+  "properties": {
+    "top": 320,
+    "left": 0,
+    "width": 960,
+    "height": 1280,
+    "isRotated": false,
+    "originalWidth": 960,
+    "originalHeight": 1920
+  },
+  "resources": {
+    "originalImage": "donkey_target_original.jpg",
+    "croppedImage": "donkey_target_cropped.jpg",
+    "thumbnailImage": "donkey_target_thumbnail.jpg",
+    "luminanceImage": "donkey_target_luminance.jpg"
+  },
+  "created": 1774363182082,
+  "updated": 1774363182082
+}

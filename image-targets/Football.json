@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/Football_luminance.jpg",
+  "metadata": null,
+  "name": "Football",
+  "type": "PLANAR",
+  "properties": {
+    "top": 214,
+    "left": 0,
+    "width": 640,
+    "height": 853,
+    "isRotated": false,
+    "originalWidth": 640,
+    "originalHeight": 1280
+  },
+  "resources": {
+    "originalImage": "Football_original.jpg",
+    "croppedImage": "Football_cropped.jpg",
+    "thumbnailImage": "Football_thumbnail.jpg",
+    "luminanceImage": "Football_luminance.jpg"
+  },
+  "created": 1775576893951,
+  "updated": 1775576893951
+}

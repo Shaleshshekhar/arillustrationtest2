@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/Bookshop_luminance.jpg",
+  "metadata": null,
+  "name": "Bookshop",
+  "type": "PLANAR",
+  "properties": {
+    "top": 320,
+    "left": 0,
+    "width": 960,
+    "height": 1280,
+    "isRotated": false,
+    "originalWidth": 960,
+    "originalHeight": 1920
+  },
+  "resources": {
+    "originalImage": "Bookshop_original.jpg",
+    "croppedImage": "Bookshop_cropped.jpg",
+    "thumbnailImage": "Bookshop_thumbnail.jpg",
+    "luminanceImage": "Bookshop_luminance.jpg"
+  },
+  "created": 1775576865229,
+  "updated": 1775576865229
+}

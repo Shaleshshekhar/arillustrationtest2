@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/Sign_luminance.jpg",
+  "metadata": null,
+  "name": "Sign",
+  "type": "PLANAR",
+  "properties": {
+    "top": 0,
+    "left": 120,
+    "width": 720,
+    "height": 960,
+    "isRotated": false,
+    "originalWidth": 960,
+    "originalHeight": 960
+  },
+  "resources": {
+    "originalImage": "Sign_original.jpg",
+    "croppedImage": "Sign_cropped.jpg",
+    "thumbnailImage": "Sign_thumbnail.jpg",
+    "luminanceImage": "Sign_luminance.jpg"
+  },
+  "created": 1775576921777,
+  "updated": 1775576921777
+}
